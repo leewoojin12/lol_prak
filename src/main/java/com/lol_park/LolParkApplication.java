@@ -1,13 +1,13 @@
-package com.lol_park.lol_prak;
+package com.lol_park;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class LolPrakApplication {
+public class LolParkApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LolPrakApplication.class, args);
+		SpringApplication.run(LolParkApplication.class, args);
 	}
 
 }
