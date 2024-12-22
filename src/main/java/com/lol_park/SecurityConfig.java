@@ -56,7 +56,7 @@ public class SecurityConfig {
                 .defaultSuccessUrl("/home"));
 
         http.authorizeHttpRequests((authorize) -> authorize
-                .requestMatchers("/user/signup", "/", "/login", "/ip-info").permitAll()
+                .requestMatchers("/user/signup", "/", "/user/login").permitAll()
                 .anyRequest().authenticated());
 
         return http.build();

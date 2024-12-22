@@ -1,31 +1,44 @@
 package com.lol_park;
 
-import com.lol_park.User;
-import com.lol_park.User_DTO;
-import com.lol_park.UserJpaRepository;
+import com.lol_park.exception.NicknameAlreadyExistsException;
+import com.lol_park.exception.InvalidPasswordException;
+import com.lol_park.exception.PasswordMismatchException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserJpaRepository userJpaRepository;
     private final PasswordEncoder passwordEncoder;
-    private final PasswordValidator passwordvalid;
 
-    public String create(@RequestBody User_DTO userDto) {
+    public void create(User_DTO userDto) {
 
-        if(!passwordvalid.validate(userDto.getPassword1(),userDto.getPassword2())){
-            return "Passwords do not match";
+
+
+        if (userDto.getNickname() == null || userJpaRepository.existsByNickname(userDto.getNickname())) {
+            throw new NicknameAlreadyExistsException(userDto.getNickname() == null ? "닉네임 칸 비었음" : "이미 존재하는 닉네임.");
+        }
+
+        // 비밀번호 요구사항 체크
+        if (userDto.getPassword1().length() < 6) {
+            throw new InvalidPasswordException("비밀번호는 6자 이상이어야 합니다.");
+        }
+
+        if (!userDto.getPassword1().equals(userDto.getPassword2())) {
+            throw new PasswordMismatchException("비밀 번호가 다릅니다.");
 
         }
+
+        // User 객체 생성 후 암호화된 비밀번호 저장
         User user = userDto.toEntity(passwordEncoder.encode(userDto.getPassword1()));
         userJpaRepository.save(user);
-        return "User registered successfully";
+
     }
+
+
+
 
 
 
