@@ -31,6 +31,11 @@ public class User {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles;
+
+
+    public String getUsername() {
+        return nickname; // nickname을 username으로 처리
+    }
     //카드 번호??
 
     //
