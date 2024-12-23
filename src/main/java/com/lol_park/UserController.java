@@ -16,16 +16,14 @@ public class UserController {
     private final UserService userService;
 
 
-
-
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password, HttpSession session) {
-        System.out.println(username + "@@@@@" + password);
+    public ResponseEntity<String> login(){
 
 
-        return "redirect:/";
+
+        return ResponseEntity.ok("로그인");
+
     }
-
 
 
 

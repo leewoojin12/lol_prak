@@ -25,4 +25,9 @@ public class User_DTO {
         user.setRoles(Set.of("USER")); // 기본적으로 사용자에게 ROLE_USER 부여
         return user;
     }
+
+
+
+
+
 }
